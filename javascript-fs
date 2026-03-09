@@ -1,0 +1,43 @@
+const fs = require('fs'). promises
+const path = require('path')
+
+const dirPath = path.join(__dirname,'myfile');
+const filePath =path.join(dirpath, 'example.txt');
+const newFilePath = path.join(dirpath, 'renamedExample.txt');
+
+async function manageFile(){
+    try{
+        // 1.create Diractory
+        await fs.mkdir(dirpath,{recursive: true});
+        console.log('Directory created.');
+
+        // 2.Write to file
+        await fs.writeFile(filepath, "hello, this is text!");
+            console.log("file written,");
+
+        // 3.Read File
+       const data = await fs.readFile(filepath, "utf8"); 
+              console.log("File content:", data);
+
+        // 4.Append to File
+       await fs.appendFile(filepath, "\nAppending more content.");
+                console.log("content appended,");
+        
+        // 5.Rename File
+              await  fs.rename(filepath, newfilepath);
+                  console.log("file renamed.");
+
+        // 6.Delete File
+                await fs.unlink(newfilepath);
+                    console.log("file deleted.");
+
+        // 7.Delete Directory
+        await fs.rm(dirPath, { recursive: true, force: true });
+                      console.log("Directory deleted.");
+
+    }catch(err){
+        console.error('Error:',err);
+    }
+}
+
+manageFile();
